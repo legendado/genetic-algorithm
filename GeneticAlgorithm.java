@@ -4,12 +4,12 @@ import java.util.Random;
 import java.util.stream.IntStream;
 
 class GeneticAlgorithm {
-    private static int COUNT = 10; // Кол-во пунктов оплаты
+    private static int COUNT = 10; // Count of payment points
     private int currentGeneration = 0;
     private Random random = new Random();
 
-    private int generationCount = 1000; // Кол-во поколений
-    private int individualCount = 100; // Кол-во геномов в поколении
+    private int generationCount = 1000; // Count of generation
+    private int individualCount = 100; // Count of genom on 1 generation
 
     private int[][] genomListParents;
     private int[][] genomListOffsprings;
@@ -41,14 +41,14 @@ class GeneticAlgorithm {
         return this.genomListParents[0];
     }
 
-    // Сгенерировать первое поколение
+    // Create first generation
     private void generateFirstGeneration() {
         for (int i = 0; i < this.individualCount; i++) {
             this.genomListParents[i] = this.generateGenom();
         }
     }
 
-    // Сгенирировать рандомный геном
+    // Create random genom
     private int[] generateGenom() {
         int[] result = new int[COUNT];
 
@@ -64,12 +64,12 @@ class GeneticAlgorithm {
         return result;
     }
 
-    // Проверка на уникальность
+    // Check on unique
     private boolean isContains(int[] array, int value) {
         return IntStream.of(array).anyMatch(x -> x == value);
     }
 
-    // Вычислить фитнесс-функцию
+    // Calculate fitness-function
     private int setFitnessFunctionResult(int[] genom) {
         int result = 0;
         for (int i = 0; i < COUNT; i++) {
@@ -78,16 +78,15 @@ class GeneticAlgorithm {
         return result;
     }
 
-    // Селекция
+    // Selection
     private void selection() {
-        Arrays.sort(genomListParents, Comparator.comparing(this::setFitnessFunctionResult));
-        // Записывает в следующее поколение 50% самых лучших геномов
+        Arrays.sort(genomListParents, Comparator.comparing(this::setFitnessFunctionResult));        
         for (int i = 0; i < this.individualCount / 2; i++) {
             this.genomListOffsprings[i] = genomListParents[i].clone();
         }
     }
 
-    // Скрещивание методом ранжирования
+    // Crossing of ranking method
     private void crossing() {
         int i = individualCount / 2;
         while (i < individualCount) {
@@ -101,12 +100,12 @@ class GeneticAlgorithm {
         }
     }
 
-    // Возвращает true, если геном после скрещивания уникальный
+    // true, if genom is unique
     private boolean isAdaptability(int[] genom) {
         return (int) IntStream.of(genom).distinct().count() < genom.length;
     }
 
-    // Скрещивание двух геномов по типу крест на крест
+    // Crossing 2 genom
     private int[] cross(int[] genom1, int[] genom2) {
         int[] offset = new int[COUNT];
         System.arraycopy(genom1, 0, offset, 0, COUNT / 2);
@@ -114,7 +113,7 @@ class GeneticAlgorithm {
         return offset;
     }
 
-    // Мутация
+    // Mutation
     private void mutation() {
         for (int[] genom : this.genomListOffsprings) {
             double MUTATION_PERCENT = 0.02; // Процент мутации
@@ -124,7 +123,7 @@ class GeneticAlgorithm {
         }
     }
 
-    // Мутация одного генома
+    // Mutate of 1 genom
     private void mutate(int[] genom) {
         int index1 = this.random.nextInt(COUNT);
         int index2 = this.random.nextInt(COUNT);
@@ -132,8 +131,8 @@ class GeneticAlgorithm {
 
         genom[index1] ^= swapMask;
         genom[index2] ^= swapMask;
-    }
-
+    }    
+     
     public void setGenerationCount(int generationCount) {
         this.generationCount = generationCount;
     }
