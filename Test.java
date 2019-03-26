@@ -1,9 +1,8 @@
 import java.util.Arrays;
 
 /**
- * Массив test чисто для проверки работы алгоритма, т.к. мы знаем заранее результат минимальной комиссии = 1.
- * [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] или [2, 1, 3, 4, 5, 6, 7, 8, 9, 10] - ответ.
- * На большом кол-ве итераций работает медленно.
+ * Array test for correct work of algorithm, because we know value of minimal commission = 1.
+ * [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] or [2, 1, 3, 4, 5, 6, 7, 8, 9, 10] - result.
  **/
 
 public class Test {
